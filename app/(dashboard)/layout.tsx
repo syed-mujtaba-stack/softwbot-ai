@@ -12,6 +12,7 @@ import {
   Bell,
   Search,
   Menu,
+  QrCode,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,6 +22,7 @@ import { Badge } from "@/components/ui/badge";
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
   { href: "/dashboard/bots", label: "Bots", icon: Bot },
+  { href: "/dashboard/whatsapp", label: "WhatsApp", icon: QrCode },
   { href: "/dashboard/conversations", label: "Conversations", icon: MessageSquare },
   { href: "/dashboard/contacts", label: "Contacts", icon: Users },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },

@@ -1,4 +1,4 @@
-import { openrouter, type ModelId } from "./openrouter";
+import { getOpenRouter, type ModelId } from "./openrouter";
 
 interface ChatParams {
   model?: ModelId;
@@ -15,6 +15,7 @@ export async function chat({
   maxTokens = 1000,
   temperature = 0.7,
 }: ChatParams) {
+  const openrouter = getOpenRouter();
   const response = await openrouter.chat.completions.create({
     model,
     messages: [{ role: "system", content: systemPrompt }, ...messages],
@@ -36,6 +37,7 @@ export async function chatStream({
   maxTokens = 1000,
   temperature = 0.7,
 }: ChatParams) {
+  const openrouter = getOpenRouter();
   const response = await openrouter.chat.completions.create({
     model,
     messages: [{ role: "system", content: systemPrompt }, ...messages],

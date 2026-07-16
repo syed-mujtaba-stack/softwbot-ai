@@ -1,6 +1,7 @@
-import { openrouter } from "./openrouter";
+import { getOpenRouter } from "./openrouter";
 
 export async function generateEmbedding(text: string): Promise<number[]> {
+  const openrouter = getOpenRouter();
   const response = await openrouter.embeddings.create({
     model: "openai/text-embedding-3-small",
     input: text,
@@ -12,6 +13,7 @@ export async function generateEmbedding(text: string): Promise<number[]> {
 export async function generateEmbeddings(
   texts: string[]
 ): Promise<number[][]> {
+  const openrouter = getOpenRouter();
   const response = await openrouter.embeddings.create({
     model: "openai/text-embedding-3-small",
     input: texts,
