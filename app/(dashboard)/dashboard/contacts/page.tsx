@@ -60,7 +60,7 @@ export default function ContactsPage() {
         body: JSON.stringify({
           phoneNumber: newPhone,
           name: newName,
-          workspaceId: "default",
+          workspaceId: "00000000-0000-0000-0000-000000000001",
         }),
       });
       if (res.ok) {

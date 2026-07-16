@@ -47,7 +47,7 @@ export async function POST(request: Request) {
   const [contact] = await db
     .insert(contacts)
     .values({
-      workspaceId: body.workspaceId || "default",
+      workspaceId: body.workspaceId || "00000000-0000-0000-0000-000000000001",
       phoneNumber: body.phoneNumber,
       name: body.name,
       email: body.email,

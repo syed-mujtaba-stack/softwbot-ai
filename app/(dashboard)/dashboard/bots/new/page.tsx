@@ -66,7 +66,7 @@ export default function NewBotPage() {
           model,
           systemPrompt,
           welcomeMessage,
-          workspaceId: "default",
+          workspaceId: "00000000-0000-0000-0000-000000000001",
         }),
       });
 

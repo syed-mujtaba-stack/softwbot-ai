@@ -36,7 +36,7 @@ export async function POST(request: Request) {
   const [bot] = await db
     .insert(bots)
     .values({
-      workspaceId: body.workspaceId || "default",
+      workspaceId: body.workspaceId || "00000000-0000-0000-0000-000000000001",
       name: body.name,
       description: body.description,
       model: body.model || "openai/gpt-4o-mini",
