@@ -12,12 +12,35 @@ function getModule(name: string): any {
   return eval("require")(name);
 }
 
+// Find Chrome on the system
+function findChromePath(): string {
+  const paths = [
+    "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+    `${process.env.LOCALAPPDATA}\\Google\\Chrome\\Application\\chrome.exe`,
+    // Edge as fallback
+    "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+    "C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe",
+  ];
+
+  const fs = getModule("fs");
+  for (const p of paths) {
+    if (fs.existsSync(p)) return p;
+  }
+  throw new Error(
+    "Chrome/Edge not found. Install Google Chrome or Microsoft Edge."
+  );
+}
+
 function getClient() {
   if (_initialized) return _client;
   _initialized = true;
 
   const wwebjs = getModule("whatsapp-web.js");
   const QRCode = getModule("qrcode");
+  const chromePath = findChromePath();
+
+  console.log("Using browser:", chromePath);
 
   _client = new wwebjs.Client({
     authStrategy: new wwebjs.LocalAuth({
@@ -25,6 +48,7 @@ function getClient() {
     }),
     puppeteer: {
       headless: true,
+      executablePath: chromePath,
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",

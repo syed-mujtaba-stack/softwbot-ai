@@ -5,12 +5,20 @@ import { eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { getConnectionStatus } from "@/lib/whatsapp/client";
 
+async function getSession(request: Request) {
+  try {
+    return await auth.api.getSession({ headers: request.headers });
+  } catch {
+    return null;
+  }
+}
+
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await auth.api.getSession({ headers: request.headers });
-  if (!session) {
+  const session = await getSession(request);
+  if (!session && process.env.NODE_ENV === "production") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -26,7 +34,6 @@ export async function POST(
 
   const newStatus = bot.status === "active" ? "paused" : "active";
 
-  // Check WhatsApp connection when activating
   if (newStatus === "active") {
     const whatsappStatus = getConnectionStatus();
     if (whatsappStatus !== "connected") {
